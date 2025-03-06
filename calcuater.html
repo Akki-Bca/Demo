@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        input {
+            width: 90%;
+            height: 50px;
+            font-size: 20px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 60px;
+            height: 50px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background: #ddd;
+            border-radius: 5px;
+        }
+        button:active {
+            background: #bbb;
+        }
+        .dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+        .dark-mode .container {
+            background: #333;
+        }
+        .dark-mode button {
+            background: #555;
+            color: white;
+        }
+        .dark-mode button:active {
+            background: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+    <div class="container">
+        <h2>Advanced Calculator</h2>
+        <input type="text" id="display" readonly>
+        <br>
+        
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button onclick="appendOperator('+')">+</button>
+        <br>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button onclick="appendOperator('-')">-</button>
+        <br>
+
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button onclick="appendOperator('*')">×</button>
+        <br>
+
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendNumber('.')">.</button>
+        <button onclick="calculateResult()">=</button>
+        <button onclick="appendOperator('/')">÷</button>
+        <br>
+
+        <button onclick="appendOperator('%')">%</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="deleteLast()">⌫</button>
+        <br>
+
+        <button onclick="calculateFunction('sin')">sin</button>
+        <button onclick="calculateFunction('cos')">cos</button>
+        <button onclick="calculateFunction('tan')">tan</button>
+        <br>
+
+        <button onclick="calculateFunction('log')">log</button>
+        <button onclick="calculateFunction('sqrt')">√</button>
+        <button onclick="calculateFunction('factorial')">x!</button>
+    </div>
+
+    <script>
+        let display = document.getElementById("display");
+
+        function appendNumber(num) {
+            display.value += num;
+        }
+
+        function appendOperator(op) {
+            display.value += op;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculateResult() {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = "Error";
+            }
+        }
+
+        function calculateFunction(func) {
+            let num = parseFloat(display.value);
+            if (isNaN(num)) {
+                display.value = "Enter a number";
+                return;
+            }
+
+            switch (func) {
+                case "sin":
+                    display.value = Math.sin(num * Math.PI / 180);
+                    break;
+                case "cos":
+                    display.value = Math.cos(num * Math.PI / 180);
+                    break;
+                case "tan":
+                    display.value = Math.tan(num * Math.PI / 180);
+                    break;
+                case "log":
+                    display.value = Math.log(num);
+                    break;
+                case "sqrt":
+                    display.value = Math.sqrt(num);
+                    break;
+                case "factorial":
+                    display.value = factorial(num);
+                    break;
+            }
+        }
+
+        function factorial(n) {
+            return n <= 1 ? 1 : n * factorial(n - 1);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
+
+</body>
+</html>
